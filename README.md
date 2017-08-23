@@ -3,5 +3,7 @@
 1. Welcome to NanoDegree        (Pass)
 2. Statistics                   (Pass)
 3. Introduce to Data Analysis   (Pass)
-4. Data Wrangling
+4. Data Wrangling               (Pass)
 5. Explore Data Analysis
+6. Introduce to Machine Learning
+7. Data Visulization

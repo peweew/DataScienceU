@@ -130,8 +130,11 @@ The shape of citric acid is not clear. So I use the log scale in x coordinate to
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(aes(x = residual.sugar), data = redwine) + 
-  geom_histogram(binwidth = 0.2)
+grid.arrange(ggplot(redwine, aes( x = 1, y = residual.sugar ) ) + 
+               geom_jitter(alpha = 0.1 ) +
+               geom_boxplot(alpha = 0.2, color = 'red' ) ,
+             ggplot(redwine, aes( x   = residual.sugar  ) ) + 
+                   geom_histogram(bins=30 ),ncol=2)
  
 
 summary(redwine$residual.sugar) 
@@ -176,7 +179,8 @@ The shape of free sulfur dioxide and total sulfur dioxide distributions seems co
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
-redwine <- transform(redwine, sulfur.dioxide.rate = free.sulfur.dioxide / total.sulfur.dioxide)
+redwine <- transform(redwine,
+                     sulfur.dioxide.rate = free.sulfur.dioxide / total.sulfur.dioxide)
 
 ggplot(aes(x = sulfur.dioxide.rate), data = redwine) + 
   geom_histogram(binwidth = .02) 
@@ -221,10 +225,7 @@ The shape of sulphates distribution seems like a positive skewed distribution.
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x = alcohol), data = redwine) + 
   geom_histogram()  
-  
-ggplot(aes(x = alcohol), data = redwine) + 
-  geom_histogram()  +
-  scale_x_log10()
+   
 
 summary(redwine$alcohol) 
 ```
@@ -297,7 +298,7 @@ may not have strong correlate to the quality of red wines.
 # Bivariate Plots Section
  
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Bivariate_Plots}
-cor_redwine <- cor(redwine[c(-1, -14)])
+cor_redwine <- cor(redwine[2:13])
 round(cor_redwine, 2)
 ```
 
@@ -316,16 +317,22 @@ We analyze the correlated relation between quality attributes and other attribut
 ggplot(aes(x = alcohol, y = quality), data = redwine) +
   geom_jitter(alpha = 1/2) +
   geom_smooth(method = 'lm')
+
+cor.test( redwine$alcohol , redwine$quality )
 ```
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x = volatile.acidity, y = quality), data = redwine) +
   geom_jitter(alpha = 1/2) +
-  geom_smooth(method = 'lm')
+  geom_smooth(method = 'lm') 
+
+cor.test( redwine$volatile.acidity ,  redwine$quality )
 ```
 
-It seems the quality increase if the alcohol degree increase and volatile.acidity decrease. But the correlation relation between quality and either of the alcohol and volatile.acidity seems quite weak. 
+
+
+It seems the quality increase if the alcohol degree increase and volatile.acidity decrease. But the correlation relation between quality and either of the alcohol and volatile.acidity seems quite weak, that is 0.4761663 between alcohol and quality, and -0.3905578 between volatil acidity and quality. 
 
 So we try to explore the other highest six correlated attributes: sulphates, citric.acid and so on, to check if there exists any strong correlation relationship between any of these attributes and quality. 
  
@@ -333,6 +340,8 @@ So we try to explore the other highest six correlated attributes: sulphates, cit
 ggplot(aes(x = sulphates, y = quality), data = redwine) +
   geom_jitter(alpha = 1/2)  +
   geom_smooth(method = 'lm')
+
+cor.test(redwine$sulphates, redwine$quality)
 ```
 
 
@@ -340,6 +349,8 @@ ggplot(aes(x = sulphates, y = quality), data = redwine) +
 ggplot(aes(x = citric.acid, y = quality), data = redwine) +
   geom_jitter(alpha = 1/2)  +
   geom_smooth(method = 'lm')
+
+cor.test(redwine$citric.acid, redwine$quality)
 ```
 
 
@@ -347,6 +358,8 @@ ggplot(aes(x = citric.acid, y = quality), data = redwine) +
 ggplot(aes(x = fixed.acidity, y = quality), data = redwine) +
   geom_jitter(alpha = 1/2)  +
   geom_smooth(method = 'lm')
+
+cor.test(redwine$fixed.acidity, redwine$quality)
 ```
 
 
@@ -354,6 +367,8 @@ ggplot(aes(x = fixed.acidity, y = quality), data = redwine) +
 ggplot(aes(x = chlorides, y = quality), data = redwine) +
   geom_jitter(alpha = 1/2)  +
   geom_smooth(method = 'lm')
+
+cor.test(redwine$chlorides, redwine$quality)
 ```
 
 
@@ -361,6 +376,8 @@ ggplot(aes(x = chlorides, y = quality), data = redwine) +
 ggplot(aes(x = total.sulfur.dioxide, y = quality), data = redwine) +
   geom_jitter(alpha = 1/2)  +
   geom_smooth(method = 'lm')
+
+cor.test(redwine$total.sulfur.dioxide, redwine$quality)
 ```
 
 
@@ -368,9 +385,13 @@ ggplot(aes(x = total.sulfur.dioxide, y = quality), data = redwine) +
 ggplot(aes(x = density, y = quality), data = redwine) +
   geom_jitter(alpha = 1/2) +
   geom_smooth(method = 'lm')
+
+cor.test(redwine$density, redwine$quality)
 ```
 
-It seems all these attributes are not strongly correlated to quality as alcohol and volatile.acidity. 
+ 
+
+It seems all these attributes are not strongly correlated to quality as alcohol and volatile.acidity, since the highest correlation value is 0.2513971, between sulphates and quality. 
 
 Then we try to find the linear relation between quality and any of the attributes such as alcohol, volatile.acidity and so on, using linear regression.
 
@@ -392,29 +413,78 @@ It seems that any of the Attributes are weakly correlated to the quality. The re
 Next we check these eight attributes and see their variation with quality. 
 
 ```{r  echo=FALSE, message=FALSE, warning=FALSE}
-b1 <- ggplot(aes(x = factor(quality), y = alcohol), data = redwine) +
-  geom_boxplot()
+b1 <- ggplot(aes(factor(quality), alcohol), 
+        data = redwine) +
+  geom_jitter( alpha = .3)  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red", 
+               shape = 8, 
+               size = 4)
 
 b2 <- ggplot(aes(y = volatile.acidity, x = factor(quality)), data = redwine) +
-  geom_boxplot()
+   geom_jitter( alpha = .3)  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red", 
+               shape = 8, 
+               size = 4)
 
-b3 <- ggplot(aes(y = sulphates, x = factor(quality)), data = redwine) +
-  geom_boxplot()
+b3 <- ggplot(aes(y = sulphates, x = factor(quality)), data = redwine) + 
+   geom_jitter( alpha = .3)  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red", 
+               shape = 8, 
+               size = 4)
 
 b4 <- ggplot(aes(y = citric.acid, x = factor(quality)), data = redwine) +
-  geom_boxplot()
+  geom_jitter( alpha = .3)  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red", 
+               shape = 8, 
+               size = 4)
 
 b5 <- ggplot(aes(y = fixed.acidity, x = factor(quality)), data = redwine) +
-  geom_boxplot()
+  geom_jitter( alpha = .3)  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red", 
+               shape = 8, 
+               size = 4)
 
 b6 <- ggplot(aes(y = chlorides, x = factor(quality)), data = redwine) +
-  geom_boxplot()
+  geom_jitter( alpha = .3)  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red", 
+               shape = 8, 
+               size = 4)
 
 b7 <- ggplot(aes(y = total.sulfur.dioxide, x = factor(quality)), data = redwine) +
-  geom_boxplot()
+  geom_jitter( alpha = .3)  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red", 
+               shape = 8, 
+               size = 4)
 
 b8 <- ggplot(aes(y = density, x = factor(quality)), data = redwine) +
-  geom_boxplot()
+  geom_jitter( alpha = .3)  +
+  geom_boxplot( alpha = .5,color = 'blue')+
+  stat_summary(fun.y = "mean", 
+               geom = "point", 
+               color = "red", 
+               shape = 8, 
+               size = 4)
 
 grid.arrange(b1, b2, b3, b4, b5, b6, b7, b8, ncol = 2)
 ```
@@ -426,7 +496,7 @@ We explore other highly correlated attributes: First we analyze pH and fixed.aci
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(aes(x = pH, y = fixed.acidity), data = redwine) +
-  geom_point() +  
+  geom_point(alpha = .3) +  
   geom_smooth(method = 'lm')
 ```
 
@@ -438,19 +508,20 @@ Next, we explore the other highest correlated relations such as density and fixe
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 p1 <- ggplot(aes(x = density, y = fixed.acidity), data = redwine) +
-  geom_point() + 
+  geom_point(alpha = .3) +  
   geom_smooth(method = 'lm')
 
 p2 <- ggplot(aes(x = citric.acid, y = fixed.acidity), data = redwine) +
-  geom_point() + 
+  geom_point(alpha = .3) +  
   geom_smooth(method = 'lm')
 
-p3 <- ggplot(aes(x = total.sulfur.dioxide, y = free.sulfur.dioxide), data = redwine) +
-  geom_point() + 
+p3 <- ggplot(aes(x = total.sulfur.dioxide, y = free.sulfur.dioxide),
+             data = redwine) +
+  geom_point(alpha = .3) +  
   geom_smooth(method = 'lm')
 
 p4 <- ggplot(aes(x = citric.acid, y = volatile.acidity), data = redwine) +
-  geom_point() + 
+  geom_point(alpha = .3) +  
   geom_smooth(method = 'lm')
 
 grid.arrange(p1, p2, p3, p4, ncol = 2)
@@ -541,20 +612,33 @@ The strongest relation is fixed.acidity and pH. The correlation value betwen pH 
 We first explore the density plots fo the most correlated two attributes: alcohol and volatile acidity, for different quality values. 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(aes(x =  alcohol, color = factor(quality)), data = redwine) + 
+p1 <- ggplot(aes(x =  alcohol, color = factor(quality)), data = redwine) + 
   geom_density(alpha = .3, size = 1.5) + 
   guides(  color = guide_legend(title="Quality")) + 
   theme_dark()
+
+p2 <- ggplot(aes(y =  alcohol, x = factor(quality)), data = redwine) + 
+  geom_boxplot()
+ 
+  
+my_layout <- rbind(c(1, 1, 1, 2), c(1, 1, 1, NA), c(1, 1, 1, NA))
+grid.arrange(p1, p2 , layout_matrix = my_layout )
     
 ```
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(aes(x =  volatile.acidity,   color = factor(quality)), data = redwine) + 
+p1 <- ggplot(aes(x =  volatile.acidity,   color = factor(quality)), data = redwine) + 
   geom_density(alpha = .3, size = 1.5) + 
   guides(fill=guide_legend(title="Quality"),  color = guide_legend(title="Quality")) +
   theme_dark()
-    
+
+p2 <- ggplot(aes(y =  volatile.acidity, x = factor(quality)), data = redwine) + 
+  geom_boxplot()
+ 
+  
+my_layout <- rbind(c(1, 1, 1, 2), c(1, 1, 1, NA), c(1, 1, 1, NA))
+grid.arrange(p1, p2 , layout_matrix = my_layout )    
 ```
 
 From the density plots, we see the better quality of red wine tend to occur more often at high alcohol density. The worse quality of red wine tend to occur more often at high volatile acidity density.
@@ -566,10 +650,13 @@ From the density plots, we see the better quality of red wine tend to occur more
 In last section, we found that alcohol has the most correlation relationship with the quality of wine. So we are interested in exploring here which attributes and alcohol together would make a better quality of red wine. We select three attributes: volatile.acid, pH, and free.sulfur.dioxide, to check if any combination of two attributes would get better quality of red wine. 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(aes(x =  alcohol, y =  pH, color = factor(quality)), data = redwine) + 
-  geom_point(alpha = 1, size = 2, position = 'jitter') +  
+ggplot(aes(x =  alcohol, y =  pH, color = factor(quality)), 
+       data = redwine) + 
+  geom_point(alpha = 1, size = 2, position = 'jitter') + 
+  geom_smooth(method = "lm", se = FALSE, size=1)  + 
 	scale_color_brewer(type = 'seq', palette = "Greens") +
-  guides(colour = guide_legend(title = 'Quality', override.aes = list(alpha = 1, size = 3))) 
+  guides(colour = guide_legend(title = 'Quality', 
+                               override.aes = list(alpha = 1, size = 3))) 
     
 ```
 
@@ -577,19 +664,25 @@ ggplot(aes(x =  alcohol, y =  pH, color = factor(quality)), data = redwine) +
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(aes(x =  alcohol, y =  volatile.acidity, color = factor(quality)), data = redwine) + 
+ggplot(aes(x =  alcohol, y =  volatile.acidity, color = factor(quality)), 
+       data = redwine) + 
   geom_point(alpha = 1, size = 2, position = 'jitter') +  
 	scale_color_brewer(type = 'seq', palette = "Greens") +
-  guides(colour = guide_legend(title = 'Quality', override.aes = list(alpha = 1, size = 3)))
+  geom_smooth(method = "lm", se = FALSE, size=1)  + 
+  guides(colour = guide_legend(title = 'Quality', 
+                               override.aes = list(alpha = 1, size = 3)))
     
 ```
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(aes(x =  alcohol, y =  free.sulfur.dioxide, color = factor(quality)), data = redwine) + 
+ggplot(aes(x =  alcohol, y =  free.sulfur.dioxide, color = factor(quality)), 
+       data = redwine) + 
   geom_point(alpha = 1, size = 2, position = 'jitter') +  
 	scale_color_brewer(type = 'seq', palette = "Greens") +
-  guides(colour = guide_legend(title = 'Quality', override.aes = list(alpha = 1, size = 3)))
+  geom_smooth(method = "lm", se = FALSE, size=1)  + 
+  guides(colour = guide_legend(title = 'Quality', 
+                               override.aes = list(alpha = 1, size = 3)))
     
 ```
 
@@ -605,35 +698,47 @@ The last indicates better red wind should have low free sulfur dioxide and high 
 We also explore other correlatd attributes and their contributions on quality of red wine. 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(aes(x =  density, y =  fixed.acidity, color = factor(quality)), data = redwine) + 
+ggplot(aes(x =  density, y =  fixed.acidity, color = factor(quality)), 
+       data = redwine) + 
   geom_point(alpha = 1, size = 2, position = 'jitter') +  
+  geom_smooth(method = "lm", se = FALSE, size=1)  + 
 	scale_color_brewer(type = 'seq', palette = "Greens") +
-  guides(colour = guide_legend(title = 'Quality', override.aes = list(alpha = 1, size = 3)))
+  guides(colour = guide_legend(title = 'Quality', 
+                               override.aes = list(alpha = 1, size = 3)))
     
 ```
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(aes(x =  citric.acid, y =  fixed.acidity, color = factor(quality)), data = redwine) + 
-  geom_point(alpha = 1, size = 2, position = 'jitter') +  
+ggplot(aes(x =  citric.acid, y =  fixed.acidity, color = factor(quality)), 
+       data = redwine) + 
+  geom_point(alpha = 1, size = 2, position = 'jitter') + 
+  geom_smooth(method = "lm", se = FALSE, size=1)  + 
 	scale_color_brewer(type = 'seq', palette = "Greens") +
-  guides(colour = guide_legend(title = 'Quality', override.aes = list(alpha = 1, size = 3)))
+  guides(colour = guide_legend(title = 'Quality', 
+                               override.aes = list(alpha = 1, size = 3)))
     
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(aes(x =  total.sulfur.dioxide, y =  free.sulfur.dioxide, color = factor(quality)), data = redwine) + 
-  geom_point(alpha = 1, size = 2, position = 'jitter') +  
+ggplot(aes(x =  total.sulfur.dioxide, y =  free.sulfur.dioxide, color = factor(quality)), 
+       data = redwine) + 
+  geom_point(alpha = 1, size = 2, position = 'jitter') + 
+  geom_smooth(method = "lm", se = FALSE, size=1)  + 
 	scale_color_brewer(type = 'seq', palette = "Greens") +
-  guides(colour = guide_legend(title = 'Quality', override.aes = list(alpha = 1, size = 3)))
+  guides(colour = guide_legend(title = 'Quality', 
+                               override.aes = list(alpha = 1, size = 3)))
     
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(aes(x =  citric.acid, y =  volatile.acidity, color = factor(quality)), data = redwine) + 
-  geom_point(alpha = 1, size = 2, position = 'jitter') +  
+ggplot(aes(x =  citric.acid, y =  volatile.acidity, color = factor(quality)), 
+       data = redwine) + 
+  geom_point(alpha = 1, size = 2, position = 'jitter') + 
+  geom_smooth(method = "lm", se = FALSE, size=1)  + 
 	scale_color_brewer(type = 'seq', palette = "Greens") +
-  guides(colour = guide_legend(title = 'Quality', override.aes = list(alpha = 1, size = 3)))
+  guides(colour = guide_legend(title = 'Quality',
+                               override.aes = list(alpha = 1, size = 3)))
     
 ```
 
@@ -715,71 +820,62 @@ make sure you justify why you chose each plot by describing what it shows.
 
 ### Plot One
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_One}
-ggplot(aes(x = factor(quality), y = volatile.acidity), data = redwine) +
+p1 <- ggplot(aes(x = factor(quality), y = volatile.acidity), data = redwine) +
   geom_boxplot(aes(fill = factor(quality))) +
   guides( color = guide_legend(title="Quality")) +
   xlab('Quality Score') +
   ylab('Volatile Acidity(g / dm^3)') +
   ggtitle('The Effect of Volatile Acidity on Quality')
 
-```
-
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(aes(x =  volatile.acidity,   color = factor(quality)), data = redwine) + 
+p2 <- ggplot(aes(x =  volatile.acidity,   color = factor(quality)),
+       data = redwine) + 
   geom_density(alpha = .3, size = 1) + 
   scale_color_brewer(type = 'seq', palette = "Blues") + 
-  guides(fill=guide_legend(title="Quality"),  color = guide_legend(title="Quality")) +
+  guides(fill=guide_legend(title="Quality"), 
+         color = guide_legend(title="Quality")) +
   xlab('Volatile Acidity(g / dm^3)') +
   ylab('Density') +
   ggtitle('Volatile Acidity Density on Quality') + 
   theme_dark()
-  
+ 
+my_layout <- rbind(c(1, 1, 1, 2), c(1, 1, 1, NA), c(1, 1, 1, NA))
+grid.arrange(p1, p2 , layout_matrix = my_layout )  
 ```
 
 
 ### Description One
 
-This diagram describe volatile acidity highly effects on the quality of red wine. The increasing of the volatile acidity will make a better quality of red wines. 
+We are interested in finding the correlated relationship between quality and volatile acidity, since these two variables has strong correlation value. From the boxplot, and also the assistant density plot, it shows volatile acidity highly effects on the quality of red wine. The increasing of the volatile acidity, the quality score value will decrease. It implies the lower level of volatile acidity may lead to a better quality of red wines. 
 
 
 
 ### Plot Two
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_Two}
 ggplot(aes(x = alcohol, y = quality), data = redwine) +
-  geom_point(alpha = .5, size = 2, aes(colour = factor(quality)), position = 'jitter') +  
+  geom_point(alpha = .5, size = 2, aes(colour = factor(quality)),
+             position = 'jitter') +  
   geom_smooth(method = 'lm') +
   guides(  color = guide_legend(title="Quality")) +
   ylab('Quality Score') +
   xlab('Alcohol (% by volume3)') +
   ggtitle('The Effect of Alcohol on Quality')
 ```
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(aes(x =  alcohol, color = factor(quality)), data = redwine) + 
-  geom_density(alpha = .3, size = 1) + 
-  scale_color_brewer(type = 'seq', palette = "Blues") +
-  guides(  color = guide_legend(title="Quality")) +
-  xlab('Alcohol (% by volume3)') +
-  ylab('Density') +
-  ggtitle('Alcohol Density on Quality') + 
-  theme_dark()
-```
-
+ 
 ### Description Two
 
-
-This diagram describe alcohol highly effects on the quality of red wine. The increasing of the alcohol will make a better quality of red wines. 
+The alcohol and quality score has the highest correlation value. So we use the scatter point to demonstrate the relation between quality and alcohol density. We found that the density of alcohol highly effects on the quality of red wine. The increasing of the alcohol will have a higher ranking of quality score. It implies that the high alcohol red wine would make a better quality of red wines. 
 
 
 
 
 ### Plot Three
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_Three}
-ggplot(aes(x =  alcohol, y =  volatile.acidity, color = factor(quality)), data = redwine) + 
+ggplot(aes(x =  alcohol, y =  volatile.acidity, color = factor(quality)), 
+       data = redwine) + 
   geom_point(alpha = 1, size = 2, position = 'jitter') +  
 	scale_color_brewer(type = 'seq', palette = "Greens") +
-  guides(colour = guide_legend(title = 'Quality', override.aes = list(alpha = 1, size = 3))) +
+  guides(colour = guide_legend(title = 'Quality',
+                               override.aes = list(alpha = 1, size = 3))) +
   xlab('Alcohol (% by volume3)') +
   ylab('Volatile Acidity(g / dm^3)') +
   ggtitle('Alcohol vs Volatile Acidity over Quality') 
@@ -787,7 +883,8 @@ ggplot(aes(x =  alcohol, y =  volatile.acidity, color = factor(quality)), data =
 
 ### Description Three
 
-Based on the correlation test and linear regression and the previous two plots on alchcol vs quality and volatile acidity vs quality, we found these two attributes alchcol and volatile acidity are highly correlated with quality of red wine. Here we plot the two ingredient together to see how the red wine quality are related to the combination of two variables. We found that the increasing of alcohol and decreasing volatile acidity would relate to a better quality of red wine. 
+We have found that the quality of red wine are closely related to alcohol and volatile acidity, individually. Based on the correlation test and linear regression and the previous two plots on alchcol vs quality and volatile acidity vs quality, we found these two attributes alchcol and volatile acidity are highly correlated with quality of red wine. But we are interested in finding if the combination of these two highly correlated variable would generate a better quality of red wine. 
+Here we plot the two ingredient together to see how the red wine quality are related to the combination of two variables. We found that the increasing of alcohol and decreasing volatile acidity would relate to a better quality of red wine. It implies that if we would like to pick a good quality of red wine, we should pick the red wine with low volatile acidity and high alcohol density.
 
 
 

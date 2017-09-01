@@ -18,6 +18,8 @@ from tester import dump_classifier_and_data
 from operator import itemgetter, attrgetter, methodcaller
 
 
+n_test = 10 
+FEATURE_SIZE = 8
  
 
 ### Task 1: Select what features you'll use.
@@ -31,13 +33,13 @@ with open("final_project_dataset.pkl", "r") as data_file:
 
 data_keys = data_dict['METTS MARK'].keys()
 
-print data_dict['METTS MARK']
+#print data_dict['METTS MARK']
 print "\nThe name of features: \n", data_keys
 print "The number of records: ", len(data_dict)
 print "The length of features: ", len(data_keys) 
 print "The number of poi: ", sum([1 for key, record in data_dict.iteritems() if record['poi'] == 1])
 
-print "\nAll person names: \n", data_dict.keys()
+#print "\nAll person names: \n", data_dict.keys()
 
 ###assist function for number of NaN in record
 def numnan(record):
@@ -49,7 +51,7 @@ def numnan(record):
 
 print '\nThe record has the most NaN value in record and its content: \n', sorted(list([list([key, numnan(record)]) for key, record in data_dict.iteritems()]), key=itemgetter(1), reverse=True)[0]
 
-print data_dict['LOCKHART EUGENE E']
+# print data_dict['LOCKHART EUGENE E']
 
 
 ### Task 2: Remove outliers
@@ -71,8 +73,12 @@ my_dataset = copy(data_dict)
 features_list = copy(data_keys)
 features_list.remove('email_address')
 features_list.remove('poi') 
-features_list = ['poi'] + features_list + ['poi_email_communication']
+##features_list = ['poi'] + features_list + ['poi_email_communication']
+features_list = ['poi'] + features_list
 
+# Combine the two features from_this_person_to_poi and from_poi_to_this_person into poi_email_communication
+# If one of the features is NaN we set the value into 0. 
+# The poi_email_communication feature value equals to the sum of  from_this_person_to_poi and from_poi_to_this_person since it is the total email communications with poi.
 for k, record in my_dataset.iteritems():
     if record['from_this_person_to_poi'] == 'NaN':
         record['from_this_person_to_poi'] = 0
@@ -80,13 +86,14 @@ for k, record in my_dataset.iteritems():
         record['from_poi_to_this_person'] = 0
     record['poi_email_communication'] = record['from_this_person_to_poi'] + record['from_poi_to_this_person']
 
- 
+print data_dict 
 
 temp_data = featureFormat(my_dataset, features_list)
 labels, features = targetFeatureSplit(temp_data) 
 
-selector = SelectKBest(f_classif)
-selector.fit_transform(features, labels)
+selector = SelectKBest(f_classif, k = FEATURE_SIZE)
+selector.fit(features, labels)
+features = selector.transform(features) 
 
 scores = np.around(selector.scores_, decimals = 3) 
 score_rank = sorted(zip(features_list[1:], scores), key = itemgetter(1), reverse = True)
@@ -94,14 +101,14 @@ score_rank = sorted(zip(features_list[1:], scores), key = itemgetter(1), reverse
 print '\n The score of features: \n',  score_rank
 
 print '\n Selected features: '
-features_list = ['poi'] + [record[0] for record in score_rank][:9] + ['poi_email_communication']
-print features_list
+#features_list = ['poi'] + [record[0] for record in score_rank][:9] + ['poi_email_communication']
+#print features_list
 
 
 
 ### Extract features and labels from dataset for local testing
-data = featureFormat(my_dataset, features_list, sort_keys = True)
-labels, features = targetFeatureSplit(data)
+#data = featureFormat(my_dataset, features_list, sort_keys = True)
+#labels, features = targetFeatureSplit(data)
  
 ### Scale teh features 
 
@@ -129,7 +136,7 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.cross_validation import train_test_split
 
 
-
+# Evaluate the accuracy score, precision and recall score.
 def evaluation_score(labels_test, pred):
     tp = len([(t, p)  for t, p in zip(labels_test, pred) if t == 1 and p == 1]) 
     tn = len([(t, p)  for t, p in zip(labels_test, pred) if t == 0 and p == 0]) 
@@ -138,8 +145,11 @@ def evaluation_score(labels_test, pred):
     return round(accuracy_score(labels_test, pred), 3), 0 if (tp + fp) == 0 else tp / float(tp + fp), 0 if (tp + fn) == 0 else tp / float(tp + fn)
     
 
-n_test = 1000
 
+# random divide the feature and label set into training and testing set. 
+# Loop 1000 times
+# return the average score for each accuracy score, precision and recall score.
+ 
 def evaluate_score(clf):
     final_score = 0., 0., 0.
     for i in range(n_test):
@@ -197,7 +207,7 @@ print clf.best_estimator_
 
 clf = KMeans(algorithm='auto', copy_x=True, init='k-means++', max_iter=300,
     n_clusters=2, n_init=10, n_jobs=1, precompute_distances='auto',
-    random_state=None, tol=1e-06, verbose=0)
+    random_state=None, tol=1e-05, verbose=0)
 print "KMeans optimized accuracy score: \n", np.around(evaluate_score(clf), decimals = 3), sum(evaluate_score(clf))  
 
 

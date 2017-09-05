@@ -11775,7 +11775,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Enron-Submission-Free-Response-Questions">Enron Submission Free-Response Questions<a class="anchor-link" href="#Enron-Submission-Free-Response-Questions">&#194;&#182;</a></h1>
+<h1 id="Enron-Submission-Free-Response-Questions"><center>Enron Submission Free-Response Questions</center><a class="anchor-link" href="#Enron-Submission-Free-Response-Questions">&#194;&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -11793,17 +11793,8 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="1-Summarize-for-us-the-goal-of-this-project-and-how-machine-learning-is-useful-in-trying-to-accomplish-it.-As-part-of-your-answer,-give-some-background-on-the-dataset-and-how-it-can-be-used-to-answer-the-project-question.-Were-there-any-outliers-in-the-data-when-you-got-it,-and-how-did-you-handle-those?">1 Summarize for us the goal of this project and how machine learning is useful in trying to accomplish it. As part of your answer, give some background on the dataset and how it can be used to answer the project question. Were there any outliers in the data when you got it, and how did you handle those?<a class="anchor-link" href="#1-Summarize-for-us-the-goal-of-this-project-and-how-machine-learning-is-useful-in-trying-to-accomplish-it.-As-part-of-your-answer,-give-some-background-on-the-dataset-and-how-it-can-be-used-to-answer-the-project-question.-Were-there-any-outliers-in-the-data-when-you-got-it,-and-how-did-you-handle-those?">&#194;&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The goal of our project is to predict the person of interest (poi) from the records of the features from the dataset. We will use a few machine learing technique to train our data and select the best fit algorithm and parameters to predict the potential poi person from the other features avaiable in dataset.</p>
-<p>In our datasets, we have total 146 records. We also have total 21 features, including 14 features related to finance records, 6 features related to email communication, and 1 feature named 'poi' for prediction. So there are total 20 features that could be used to train and predict for poi person.</p>
-<p>In our dataset, we have a few outliers. 'TOTAL' appears in the key of the dictionary of dataset and should be removed since it does not record a person's information. We also remove record with key 'LOCKHART EUGENE E' since all the features have NaN values except poi equal to false. This record will not provide us any useful information to predict the poi from the other features. The total number of records after removing outliner is 144. We also remove the feature named email_address since it is used to identify a person not related to poi feature. Since poi is also a feature but prediction, we only use the 19 featuers to predict the poi feature.</p>
+<blockquote><h3 id="Question-1:-Summarize-for-us-the-goal-of-this-project-and-how-machine-learning-is-useful-in-trying-to-accomplish-it.-As-part-of-your-answer,-give-some-background-on-the-dataset-and-how-it-can-be-used-to-answer-the-project-question.-Were-there-any-outliers-in-the-data-when-you-got-it,-and-how-did-you-handle-those?">Question 1: Summarize for us the goal of this project and how machine learning is useful in trying to accomplish it. As part of your answer, give some background on the dataset and how it can be used to answer the project question. Were there any outliers in the data when you got it, and how did you handle those?<a class="anchor-link" href="#Question-1:-Summarize-for-us-the-goal-of-this-project-and-how-machine-learning-is-useful-in-trying-to-accomplish-it.-As-part-of-your-answer,-give-some-background-on-the-dataset-and-how-it-can-be-used-to-answer-the-project-question.-Were-there-any-outliers-in-the-data-when-you-got-it,-and-how-did-you-handle-those?">&#194;&#182;</a></h3>
+</blockquote>
 
 </div>
 </div>
@@ -11812,7 +11803,10 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="2-What-features-did-you-end-up-using-in-your-POI-identifier,-and-what-selection-process-did-you-use-to-pick-them?--As-part-of-the-assignment,-you-should-attempt-to-engineer-your-own-feature-that-does-not-come-ready-made-in-the-dataset----explain-what-feature-you-tried-to-make,-and-the-rationale-behind-it.">2 What features did you end up using in your POI identifier, and what selection process did you use to pick them?  As part of the assignment, you should attempt to engineer your own feature that does not come ready-made in the dataset -- explain what feature you tried to make, and the rationale behind it.<a class="anchor-link" href="#2-What-features-did-you-end-up-using-in-your-POI-identifier,-and-what-selection-process-did-you-use-to-pick-them?--As-part-of-the-assignment,-you-should-attempt-to-engineer-your-own-feature-that-does-not-come-ready-made-in-the-dataset----explain-what-feature-you-tried-to-make,-and-the-rationale-behind-it.">&#194;&#182;</a></h3><h3 id="In-your-feature-selection-step,-if-you-used-an-algorithm-like-a-decision-tree,-please-also-give-the-feature-importances-of-the-features-that-you-use,-and-if-you-used-an-automated-feature-selection-function-like-SelectKBest,-please-report-the-feature-scores-and-reasons-for-your-choice-of-parameter-values">In your feature selection step, if you used an algorithm like a decision tree, please also give the feature importances of the features that you use, and if you used an automated feature selection function like SelectKBest, please report the feature scores and reasons for your choice of parameter values<a class="anchor-link" href="#In-your-feature-selection-step,-if-you-used-an-algorithm-like-a-decision-tree,-please-also-give-the-feature-importances-of-the-features-that-you-use,-and-if-you-used-an-automated-feature-selection-function-like-SelectKBest,-please-report-the-feature-scores-and-reasons-for-your-choice-of-parameter-values">&#194;&#182;</a></h3>
+<p>The goal of our project is to predict the person of interest <em>poi</em> from the records of the features from the dataset. We will use a few machine learing technique to train our data and select the best fit algorithm and parameters to predict the potential poi person from the other features avaiable in dataset.</p>
+<p>In our datasets, we have total 146 records. We also have total 21 features, including 14 features related to finance records, 6 features related to email communication, and 1 feature named <em>poi</em> for prediction. So there are total 20 features that could be used to train and predict for <em>poi</em> person.</p>
+<p>In our dataset, we have a few outliers. <em>TOTAL</em> appears in the key of the dictionary of dataset and should be removed since it does not record a person's information. We also remove record with key <em>LOCKHART EUGENE E</em> since all the features have NaN values except poi equal to false. This record will not provide us any useful information to predict the poi from the other features. The total number of records after removing outliner is 144. We also remove the feature named email_address since it is used to identify a person not related to <em>poi</em> feature. Since <em>poi</em> is also a feature but prediction, we only use the 19 featuers to predict the <em>poi</em> feature.</p>
+
 </div>
 </div>
 </div>
@@ -11820,174 +11814,147 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In order to select the best features for our poi identifer, we use the SelectKBest function from sklearn module. We first rank all the 19 features as follow:</p>
+<blockquote><h3 id="Question-2:--In-your-feature-selection-step,-if-you-used-an-algorithm-like-a-decision-tree,-please-also-give-the-feature-importances-of-the-features-that-you-use,-and-if-you-used-an-automated-feature-selection-function-like-SelectKBest,-please-report-the-feature-scores-and-reasons-for-your-choice-of-parameter-values">Question 2:  In your feature selection step, if you used an algorithm like a decision tree, please also give the feature importances of the features that you use, and if you used an automated feature selection function like SelectKBest, please report the feature scores and reasons for your choice of parameter values<a class="anchor-link" href="#Question-2:--In-your-feature-selection-step,-if-you-used-an-algorithm-like-a-decision-tree,-please-also-give-the-feature-importances-of-the-features-that-you-use,-and-if-you-used-an-automated-feature-selection-function-like-SelectKBest,-please-report-the-feature-scores-and-reasons-for-your-choice-of-parameter-values">&#194;&#182;</a></h3>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to select the best features for our poi identifer, we use the <em>SelectKBest</em> function from sklearn module. We first rank all the 19 features as follow:</p>
 <table>
 <thead><tr>
 <th style="text-align:left">Feature</th>
-<th>Score</th>
+<th style="text-align:left">Score</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">'exercised_stock_options'</td>
-<td>25.097</td>
+<td style="text-align:left">'exercised_stock_options'&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td style="text-align:left">25.097 &nbsp;&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
 <td style="text-align:left">'total_stock_value'</td>
-<td>24.468</td>
+<td style="text-align:left">24.468</td>
 </tr>
 <tr>
 <td style="text-align:left">'bonus'</td>
-<td>21.059</td>
+<td style="text-align:left">21.059</td>
 </tr>
 <tr>
 <td style="text-align:left">'salary'</td>
-<td>18.576</td>
+<td style="text-align:left">18.576</td>
 </tr>
 <tr>
 <td style="text-align:left">'deferred_income'</td>
-<td>11.596</td>
+<td style="text-align:left">11.596</td>
 </tr>
 <tr>
 <td style="text-align:left">'long_term_incentive'</td>
-<td>10.071</td>
+<td style="text-align:left">10.071</td>
 </tr>
 <tr>
 <td style="text-align:left">'restricted_stock'</td>
-<td>9.346</td>
+<td style="text-align:left">9.346</td>
 </tr>
 <tr>
 <td style="text-align:left">'total_payments'</td>
-<td>8.867</td>
+<td style="text-align:left">8.867</td>
 </tr>
 <tr>
 <td style="text-align:left">'shared_receipt_with_poi'</td>
-<td>8.746</td>
+<td style="text-align:left">8.746</td>
 </tr>
 <tr>
 <td style="text-align:left">'loan_advances'</td>
-<td>7.243</td>
+<td style="text-align:left">7.243</td>
 </tr>
 <tr>
 <td style="text-align:left">'expenses'</td>
-<td>6.234</td>
+<td style="text-align:left">6.234</td>
 </tr>
 <tr>
 <td style="text-align:left">'from_poi_to_this_person'</td>
-<td>5.344</td>
+<td style="text-align:left">5.344</td>
 </tr>
 <tr>
 <td style="text-align:left">'other'</td>
-<td>4.205</td>
+<td style="text-align:left">4.205</td>
 </tr>
 <tr>
 <td style="text-align:left">'from_this_person_to_poi'</td>
-<td>2.427</td>
+<td style="text-align:left">2.427</td>
 </tr>
 <tr>
 <td style="text-align:left">'director_fees'</td>
-<td>2.108</td>
+<td style="text-align:left">2.108</td>
 </tr>
 <tr>
 <td style="text-align:left">'to_messages'</td>
-<td>1.699</td>
+<td style="text-align:left">1.699</td>
 </tr>
 <tr>
 <td style="text-align:left">'deferral_payments'</td>
-<td>0.217</td>
+<td style="text-align:left">0.217</td>
 </tr>
 <tr>
 <td style="text-align:left">'from_messages'</td>
-<td>0.164</td>
+<td style="text-align:left">0.164</td>
 </tr>
 <tr>
 <td style="text-align:left">'restricted_stock_deferred</td>
-<td>0.065</td>
+<td style="text-align:left">0.065</td>
 </tr>
 </tbody>
 </table>
-<p>We select the first 9 features since these features has the highest scores since all the 9 features has the highest scores related to poi. But unfortunately, the top 8 features come from financial features. There is only one features 'shared_receipt_with_poi' come from email features. In order to increase more features from email feature set, we try to combine the two email features with good score, that is 'from_poi_to_this_person' and 'from_this_person_to_poi' together to generate a new feature named  'poi_email_communication'. We hope the new feature would have a better correlation with the poi for our machine learning model. Unfortunately, the new features only has score 4.955, which is worse than 'from_poi_to_this_person' alone. So we decide to include the original two features 'from_poi_to_this_person' and 'from_this_person_to_poi' and also the 'other', which has higher score than 'from_this_person_to_poi' into our final select feature sets.</p>
-<h3 id="Did-you-have-to-do-any-scaling?-Why-or-why-not?">Did you have to do any scaling? Why or why not?<a class="anchor-link" href="#Did-you-have-to-do-any-scaling?-Why-or-why-not?">&#194;&#182;</a></h3><p>For all the selected features, we use the MinMaxScaler to scale the values of each records in dataset. Since each features are measured on different unit, for instance the payment is in USD and email is in number, we need to scale all the values in range [0, 1).</p>
-<h3 id="SelectKBest-Feature-choice">SelectKBest Feature choice<a class="anchor-link" href="#SelectKBest-Feature-choice">&#194;&#182;</a></h3><p>We select the best score features depend on the feature score. But we are not sure how many features that we should use. In order to find the optimal parameter k of SelectKBest function, we test the features k = 2, 4, 8, 10, 12, and compare the machine learning algorithm score on each k choice.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="3-What-algorithm-did-you-end-up-using?-What-other-one(s)-did-you-try?-How-did-model-performance-differ-between-algorithms?">3 What algorithm did you end up using? What other one(s) did you try? How did model performance differ between algorithms?<a class="anchor-link" href="#3-What-algorithm-did-you-end-up-using?-What-other-one(s)-did-you-try?-How-did-model-performance-differ-between-algorithms?">&#194;&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We first divide our dataset into training set and testing set. We test seven machine learning algorithm, Naive Bayes, LogisticRegression, KMeans Cluster, SVC, DecisionTreeClassifier, RandomForestClassifier, AdaBoostClassifier, which are introduced in our course or mentioned in reading document. All the machine learning algorithm we use the default setting except the kmean cluster we use the cluster number equal to two since there are only non-poi and poi in our prediction range. In the begining we only use the accuracy_score measure to test the prediction accuracy of our dataset. But we found that all the machine learning algorithms have a good performance. This is because all our algorithm has high non-poi rate. So if the machine learning algorithm just predict all the poi as false, it can still get a high accuracy score. Therefore, in order to make a better test result, for each algorithm we calculate the accuracy score, precision score and recall score. We also run the evaluation function, which calculate the accuracy score, precision score and recall score, 1000 times, and for each time, we randomly select the seed of train_test_split algorithm to generate a random splitting train set and test set. We also compute the total score, which is the sum of the accuracy score, precision score and recall score, to evalute which algorithm has the best results on average. All the results for each machine learing algorithm as follow:</p>
+<blockquote><h3 id="What-features-did-you-end-up-using-in-your-POI-identifier,-and-what-selection-process-did-you-use-to-pick-them?">What features did you end up using in your POI identifier, and what selection process did you use to pick them?<a class="anchor-link" href="#What-features-did-you-end-up-using-in-your-POI-identifier,-and-what-selection-process-did-you-use-to-pick-them?">&#194;&#182;</a></h3>
+</blockquote>
+<p>We select the best score features depend on the feature score. But we are not sure how many features that we should use. In order to find the optimal parameter k of SelectKBest function and the optimal number of features that will be used in machine learning algorithm, we tried  the number of features k = 2, 4, 6, 8, 10, 12, 14. For example, if we select k = 2, we will pick the feature <em>exercised_stock_options</em> and <em>total_stock_value</em>, and so on. Later, we will compare the performance of our selected machine learning algorithm (using evaluation algorithm) on the number of selected features, to find the optimal number of features that should be used for machine learning.</p>
+<blockquote><h3 id="As-part-of-the-assignment,-you-should-attempt-to-engineer-your-own-feature-that-does-not-come-ready-made-in-the-dataset----explain-what-feature-you-tried-to-make,-and-the-rationale-behind-it.">As part of the assignment, you should attempt to engineer your own feature that does not come ready-made in the dataset -- explain what feature you tried to make, and the rationale behind it.<a class="anchor-link" href="#As-part-of-the-assignment,-you-should-attempt-to-engineer-your-own-feature-that-does-not-come-ready-made-in-the-dataset----explain-what-feature-you-tried-to-make,-and-the-rationale-behind-it.">&#194;&#182;</a></h3>
+</blockquote>
+<p>We made two new features in our datasets. The first new feature is called <em>from_poi_message_rate</em>. It is the ratio between the number of emails from poi email to this person and total number of emails to this person, that is, $$\mbox{from_poi_message_rate} = \frac{\mbox{from_poi_to_this_person}}{\mbox{to_messages}}$$ The second new feature is called  to_poi_message_rate, the rate between the number of emails from this person to poi and total number of emails from this person, that is, $$\mbox{to_poi_message_rate} = \frac{\mbox{from_this_person_to_poi}}{\mbox{from_messages}}$$</p>
+<p>The reason why we create the two new features is that each person may send and receive a lot of emails each day. There are a few emails in the sending emails and receving emails are from or to <em>poi</em>. If we only use the original features <em>from_poi_to_this_person</em> and <em>from_this_person_to_poi</em> to measure how many emails this person communicate with poi, it may not accurate since this person may have a lot of email communication as well, for instance, the secretary of department. So we create two new features measuring the ratio of each person communicating with <em>poi</em>. The more percent of email this person communicating with <em>poi</em>, the closer relation this person has with <em>poi</em>. As we expected, the <em>SelectKBest</em> function returns the higher score on these two new features than the original features.</p>
 <table>
 <thead><tr>
-<th style="text-align:left">Algorithm</th>
-<th style="text-align:left">Accuracy_score</th>
-<th style="text-align:left">Precision</th>
-<th style="text-align:left">Recall</th>
-<th style="text-align:left">Total Score</th>
+<th style="text-align:left">Feature</th>
+<th style="text-align:left">Score</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">GaussianNB</td>
-<td style="text-align:left">0.857</td>
-<td style="text-align:left">0.428</td>
-<td style="text-align:left">0.453</td>
-<td style="text-align:left">1.725</td>
+<td style="text-align:left">'to_poi_message_rate'</td>
+<td style="text-align:left">16.640</td>
 </tr>
 <tr>
-<td style="text-align:left">LogisticRegression</td>
-<td style="text-align:left">0.861</td>
-<td style="text-align:left">0.25</td>
-<td style="text-align:left">0.054</td>
-<td style="text-align:left">1.365</td>
-</tr>
-<tr>
-<td style="text-align:left">KMeans</td>
-<td style="text-align:left">0.582</td>
-<td style="text-align:left">0.312</td>
-<td style="text-align:left">0.437</td>
-<td style="text-align:left">1.619</td>
-</tr>
-<tr>
-<td style="text-align:left">SVC</td>
-<td style="text-align:left">0.88</td>
-<td style="text-align:left">0.0</td>
-<td style="text-align:left">0.0</td>
-<td style="text-align:left">0.861</td>
-</tr>
-<tr>
-<td style="text-align:left">DecisionTreeClassifier</td>
-<td style="text-align:left">0.8</td>
-<td style="text-align:left">0.332</td>
-<td style="text-align:left">0.386</td>
-<td style="text-align:left">1.174</td>
-</tr>
-<tr>
-<td style="text-align:left">RandomForestClassifier</td>
-<td style="text-align:left">0.841</td>
-<td style="text-align:left">0.594</td>
-<td style="text-align:left">0.2</td>
-<td style="text-align:left">1.347</td>
-</tr>
-<tr>
-<td style="text-align:left">AdaBoostClassifier</td>
-<td style="text-align:left">0.825</td>
-<td style="text-align:left">0.198</td>
-<td style="text-align:left">0.181</td>
-<td style="text-align:left">1.328</td>
+<td style="text-align:left">'from_poi_to_this_person'</td>
+<td style="text-align:left">5.344</td>
 </tr>
 </tbody>
 </table>
-<p>Based on the score in the table of each machine learning algorithm, we select the LogisticRegression as our candidate machine learing algorithm since it has the second highest best total score on the accuracy score, precision score and recall score. We could also select GuassianNB and KMeans as our candidate algorithm due to the high score achieved. Our reason to select LogisticRegression is we could optimize the parameter to get a better score than GaussianNB.</p>
+<table>
+<thead><tr>
+<th style="text-align:left">Feature</th>
+<th style="text-align:left">Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">'from_poi_message_rate'</td>
+<td style="text-align:left">3.21</td>
+</tr>
+<tr>
+<td style="text-align:left">'from_this_person_to_poi'</td>
+<td style="text-align:left">2.427</td>
+</tr>
+</tbody>
+</table>
+<p>We find the new features has better performance on our machine learning algorithm in our final evaluation section.</p>
+<blockquote><h3 id="Did-you-have-to-do-any-scaling?-Why-or-why-not?">Did you have to do any scaling? Why or why not?<a class="anchor-link" href="#Did-you-have-to-do-any-scaling?-Why-or-why-not?">&#194;&#182;</a></h3>
+</blockquote>
+<p>For all the selected features, we use the <em>MinMaxScaler</em> to scale the values of each records in dataset. Since each features are measured on different unit, for instance the payment is in USD and email is in number, the features on different measurement unit may have different weight on machine learning algorithm. In order to balance the features measured on different unit, we scale all the values in range [0, 1) using <em>MinMaxScaler</em> .</p>
 
 </div>
 </div>
@@ -11996,16 +11963,8 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="4-What-does-it-mean-to-tune-the-parameters-of-an-algorithm,-and-what-can-happen-if-you-don&#8217;t-do-this-well?-How-did-you-tune-the-parameters-of-your-particular-algorithm?-What-parameters-did-you-tune?">4 What does it mean to tune the parameters of an algorithm, and what can happen if you don&#8217;t do this well? How did you tune the parameters of your particular algorithm? What parameters did you tune?<a class="anchor-link" href="#4-What-does-it-mean-to-tune-the-parameters-of-an-algorithm,-and-what-can-happen-if-you-don&#8217;t-do-this-well?-How-did-you-tune-the-parameters-of-your-particular-algorithm?-What-parameters-did-you-tune?">&#194;&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We test the parameters of the three selected machine learning algorithms: GaussianNB and KMeans and LogisticRegression. For each algorithm we use GridSearchCV of sklearn model to selet the ooptimal parameters for each algorithm. For LogisticRegression we exhaustively search c and tol. For KMeans culsuter algorithm we search tol. Since Naive Bayes does not have parameters, so there is no optimazation on Naive Bayes algorithm.</p>
-<p>We also test the k parameter of SelectKBest, that is k = 2, 4, 8, 10, 12, to find the optimal number of features that we should use.</p>
+<blockquote><h3 id="Question-3:-What-algorithm-did-you-end-up-using?-What-other-one(s)-did-you-try?-How-did-model-performance-differ-between-algorithms?">Question 3: What algorithm did you end up using? What other one(s) did you try? How did model performance differ between algorithms?<a class="anchor-link" href="#Question-3:-What-algorithm-did-you-end-up-using?-What-other-one(s)-did-you-try?-How-did-model-performance-differ-between-algorithms?">&#194;&#182;</a></h3>
+</blockquote>
 
 </div>
 </div>
@@ -12014,7 +11973,48 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="5-What-is-validation,-and-what&#8217;s-a-classic-mistake-you-can-make-if-you-do-it-wrong?-How-did-you-validate-your-analysis?">5 What is validation, and what&#8217;s a classic mistake you can make if you do it wrong? How did you validate your analysis?<a class="anchor-link" href="#5-What-is-validation,-and-what&#8217;s-a-classic-mistake-you-can-make-if-you-do-it-wrong?-How-did-you-validate-your-analysis?">&#194;&#182;</a></h3>
+<p>In this section, we tried five machine learning algorithm, <em>Naive Bayes</em>, <em>LogisticRegression, KMeans Cluster, DecisionTreeClassifier, RandomForestClassifier</em>, which are introduced in our course or mentioned in reading documents. In the inital phase of algorithm selecting, we use the default parameters of machine learning algorithm, except the <em>kmean</em> cluster we select the <em>n_clusters</em> equal to two, since there are only <em>non-poi</em> and <em>poi</em> in our predicted object. We also test each machine learning algorithm on select number of features $k = 2 , 4, 6, 8 , 10 ,12, 14$.</p>
+<p>In the begining we only use the accuracy_score measurement to test the prediction accuracy of our dataset. But we found that all the machine learning algorithms have a good performance under number of features. This is because the dataset has unbalanced values in labels: <em>poi</em>. The majority of <em>poi</em> are marked as false or zero. If the machine learning algorithm simply predict all the <em>poi</em> as false, it can still get a high accuracy score. Therefore, in order to make a better test evaluation of performance of each machine learning algorithm, we measure the performance by accuracy score, precision score and recall score.</p>
+<p>For each machine learning algorithm, the accuracy, precision and recall are as follow:</p>
+<p><img src="pic3.png" alt="pic">
+<img src="pic2.png" alt="pic">
+<img src="pic1.png" alt="pic"></p>
+<p>Based on the plots of accuracy, precision and recall measurement, the <em>Decision tree</em> and <em>kmean cluster</em> have the best performance. The other machine learning algorithms such as <em>RandomForest</em> may has a good performance on one measurement, but poor performance overall.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><h3 id="Question:-4-What-does-it-mean-to-tune-the-parameters-of-an-algorithm,-and-what-can-happen-if-you-don&#8217;t-do-this-well?-How-did-you-tune-the-parameters-of-your-particular-algorithm?-What-parameters-did-you-tune?">Question: 4 What does it mean to tune the parameters of an algorithm, and what can happen if you don&#8217;t do this well? How did you tune the parameters of your particular algorithm? What parameters did you tune?<a class="anchor-link" href="#Question:-4-What-does-it-mean-to-tune-the-parameters-of-an-algorithm,-and-what-can-happen-if-you-don&#8217;t-do-this-well?-How-did-you-tune-the-parameters-of-your-particular-algorithm?-What-parameters-did-you-tune?">&#194;&#182;</a></h3>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this section, we try to find the optimal parameter of the machine learning algorithms selected in last section: <em>KMeans</em> and <em>DecisionTree</em>, in order to get the best performances.</p>
+<p>To find the optimal parameters, we use two steps: In the first step, find the optimal number of features of each machine learning algorithm. In previous section, we tried to find the optimal number of features for each machine learn algorithm, that is $k = 2, 4, 6, 8, 10, 12, 14$, to find the optimal number of features. For <em>KMeans</em>, we find that the <em>KMeans</em> machine learning would perform the best if the number of features $k = 6$. It means we select the features: exercised_stock_options, total_stock_value, bonus, salary, deferred_income, long_term_incentive for <em>KMeans</em> algorithm; For <em>DecisionTreeClassifier</em> we find it performs well if the number of features $k = 4$. It means we select the features: exercised_stock_options, total_stock_value, bonus, salary for <em>DecisionTreeClassifier</em> algorithm.</p>
+<p>In the second steps, we tried to find the optimal parameters of each machine learning algorityms. We use the hyperparameter tuning to find these optimal parameters.</p>
+<blockquote><p><strong>Definition</strong>: <em>In machine learning, the hyperparameters are parameters whose values are set prior to the commencement of learning process. By contrast, the values of other parameters are derived via training. Hyperparameter optimization or tuning is to choose a set of optimal hyperparameters for a learning algorithm. The same kind of machine learning model could require different constraints, weights or learning rates to generalize different data patterns. These measures are called hyperparameters, and have to be tuned so that the model can best solve the machine learning problem. Usually a metric is chosen to measure the algorithm's performance on an independent data set and hyperparameters that maximize this measure are adopted.</em></p>
+</blockquote>
+<p>The classic way of performing hyperparameter optimization is grid serach. In our case we need to find the hyperparameters for the two selected machine learning algorithms: <em>KMeans</em> and <em>DecisionTreeClassifier</em>. In detail, for each algorithm we use GridSearchCV of sklearn model to select the hyperparameter for each machine learning algorithm. For <em>KMeans</em> cluster algorithm we exhaustively search the hyperparameter <em>tol</em>, which is the relative tolerance with regards to inertia to declare convergence, That is <code>param_grid_kmean = { 'tol': [1e-11, 1e-10, 1e-9, 1e-8,  1e-7, 1e-6, 1e-5, 1e-4, 1e-3], }</code> to optimize <em>KMeans</em> parameter; For <em>DecisionTreeClassifier</em> we exhaustively search the hyperparameter <em>max_depth</em>, <em>min_samples_split</em> and <em>min_samples_leaf</em>, which are the maximum search depth, minimum number of samples required to split an internal node, and minimum number of samples required to be at a leaf node. That is <code>param_grid_dt = {'max_depth': [None, 2, 4, 6, 8, 10], 'min_samples_split' : [2, 4, 6, 10], 'min_samples_leaf' : [1, 2, 4, 8], }</code> to optimize <em>DecisionTreeClassifier</em> parameters.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><h3 id="Question:-5-What-is-validation,-and-what&#8217;s-a-classic-mistake-you-can-make-if-you-do-it-wrong?-How-did-you-validate-your-analysis?">Question: 5 What is validation, and what&#8217;s a classic mistake you can make if you do it wrong? How did you validate your analysis?<a class="anchor-link" href="#Question:-5-What-is-validation,-and-what&#8217;s-a-classic-mistake-you-can-make-if-you-do-it-wrong?-How-did-you-validate-your-analysis?">&#194;&#182;</a></h3>
+</blockquote>
+
 </div>
 </div>
 </div>
@@ -12023,10 +12023,9 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The validation of machine learning algorithm is to test if our machine learning algorithm has a good performance on new data. Therefore we need to use robust technique to train and evaluate our models on dataset. The more reliable of the validation we estimated on our model, the further we can push the performance and be confident on the operation of using our model.</p>
-<p>There are a few potential mistakes we can make in our machine learning models. For example, we may over fitting our features so there are a good performance on training dataset but poor performance on the testign dataset and practical usage. In our dataset, we use our own designed evaluation function in document, and also the tester.py provoided by project original file.</p>
-<p>Our own evaulation use the accuracy score, precision and recall for evaluating our model performance. We divide the dataset into training set and test set. We loop our evaluation algorithm 1000 times. For each time, we randomly set the training set and test set by choosing a new random seed. Finally we average the accuracy score, precision and recall scores on the 1000 times. The accuracy score equals to the ratio of the correct prediction, including poi and non-poi and all the predictions.</p>
-<p>The precision equals to the ratio of the correct predicted record as poi and the total record of predicting as poi;</p>
-<p>The recall equals to the ratio of the correct predicted record and the total record of true poi.</p>
+<p>There are a few potential mistakes we can make in our machine learning models. For example, we may over fitting our features so there are a good performance on training dataset but poor performance on the testing dataset and practical usage. In our dataset, we use the function <em>test_classifier</em> provided in the <em>tester.py</em> file to evaluate the performance of machine learning algorithm.</p>
+<p>The <em>test_classifier</em> divide the dataset into training set and test set. The <em>test_classifier</em> use the <em>StratifiedShuffleSplit</em> to split the dataset into training set and test set. The benefit of using <em>StratifiedShuffleSplit</em> is to balanced split the dataset. The traing set and testing set will have the same percent of <em>poi</em>. It makes better splits than <em>train_test_split</em>, which I tried, without considering the balanced splitting. 
+The <em>test_classifier</em> also set the parameters <code>folds = 1000</code> to loop the evaluation algorithm 1000 times. For each loop, <em>test_classifier</em> split the dataset into training set and testing set, calculate the number of samples of <em>true_negatives</em>, <em>false_negatives</em>, <em>false_positives</em> and <em>true_positives</em>. Finally the <em>test_classifier</em> sum the count of  <em>true_negatives</em>, <em>false_negatives</em>, <em>false_positives</em> and <em>true_positives</em> in each experiments to generate the score of <em>accuracy</em>, <em>precision</em> and <em>recall</em>.</p>
 
 </div>
 </div>
@@ -12035,7 +12034,9 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="6-Give-at-least-2-evaluation-metrics-and-your-average-performance-for-each-of-them.-Explain-an-interpretation-of-your-metrics-that-says-something-human-understandable-about-your-algorithm&#8217;s-performance.">6 Give at least 2 evaluation metrics and your average performance for each of them. Explain an interpretation of your metrics that says something human-understandable about your algorithm&#8217;s performance.<a class="anchor-link" href="#6-Give-at-least-2-evaluation-metrics-and-your-average-performance-for-each-of-them.-Explain-an-interpretation-of-your-metrics-that-says-something-human-understandable-about-your-algorithm&#8217;s-performance.">&#194;&#182;</a></h3>
+<blockquote><h3 id="Question-6:-Give-at-least-2-evaluation-metrics-and-your-average-performance-for-each-of-them.-Explain-an-interpretation-of-your-metrics-that-says-something-human-understandable-about-your-algorithm&#8217;s-performance.">Question 6: Give at least 2 evaluation metrics and your average performance for each of them. Explain an interpretation of your metrics that says something human-understandable about your algorithm&#8217;s performance.<a class="anchor-link" href="#Question-6:-Give-at-least-2-evaluation-metrics-and-your-average-performance-for-each-of-them.-Explain-an-interpretation-of-your-metrics-that-says-something-human-understandable-about-your-algorithm&#8217;s-performance.">&#194;&#182;</a></h3>
+</blockquote>
+
 </div>
 </div>
 </div>
@@ -12043,7 +12044,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Our result of evaluation on the three selected algorithm: Naive Bayes, KMeans and LogisticRegression as follow:</p>
+<p>Our result of evaluation on the two selected algorithm: <em>KMeans</em> and <em>DecisionTreeClassifier</em> as follow:</p>
 <table>
 <thead><tr>
 <th style="text-align:left">Algorithm</th>
@@ -12053,58 +12054,35 @@ div#notebook {
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left">GaussianNB (K = 8)</td>
-<td style="text-align:left">0.896</td>
-<td style="text-align:left">0.385</td>
-<td style="text-align:left">0.397</td>
-</tr>
-<tr>
-<td style="text-align:left">LogisticRegression (K = 12)</td>
-<td style="text-align:left">0.739</td>
-<td style="text-align:left">0.357</td>
-<td style="text-align:left">0.628</td>
-</tr>
-<tr>
-<td style="text-align:left">KMeans (K = 2)</td>
-<td style="text-align:left">0.757</td>
-<td style="text-align:left">0.583</td>
-<td style="text-align:left">0.397</td>
-</tr>
-</tbody>
-</table>
-<p>Here k is the optimal feature numbers that we find after trying different k values, that is k = 2, 4, 8, 10, 12 in SelectKBest function.</p>
-<p>The result of test.py on the three select algorithm are as follow:</p>
-<table>
-<thead><tr>
-<th style="text-align:left">Algorithm</th>
-<th style="text-align:left">Accuracy_score</th>
-<th style="text-align:left">Precision</th>
-<th style="text-align:left">Recall</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">GaussianNB</td>
-<td style="text-align:left">0.841</td>
-<td style="text-align:left">0.383</td>
-<td style="text-align:left">0.314</td>
-</tr>
-<tr>
-<td style="text-align:left">LogisticRegression</td>
-<td style="text-align:left">0.399</td>
-<td style="text-align:left">0.121</td>
-<td style="text-align:left">0.562</td>
-</tr>
 <tr>
 <td style="text-align:left">KMeans</td>
-<td style="text-align:left">0.850</td>
-<td style="text-align:left">0.287</td>
-<td style="text-align:left">0.080</td>
+<td style="text-align:left">0.79507</td>
+<td style="text-align:left">0.28856</td>
+<td style="text-align:left">0.29650</td>
+</tr>
+<tr>
+<td style="text-align:left">DecisionTreeClassifier</td>
+<td style="text-align:left">0.79154</td>
+<td style="text-align:left">0.32391</td>
+<td style="text-align:left">0.32650</td>
 </tr>
 </tbody>
 </table>
-<p>All the three algorithm perform quite well overall.</p>
+<p>For <em>KMeans</em> we select the top scored 6 features by <em>SelectKBest</em> function, and select the optimized parameters as follow:</p>
+<p><code>KMeans(algorithm='auto', copy_x=True, init='k-means++', max_iter=600,
+    n_clusters=2, n_init=6, n_jobs=1, precompute_distances='auto',
+    random_state=None, tol=1e-07, verbose=0)</code></p>
+<p>For <em>DecisionTreeClassifier</em> we select the top scored 4 features by <em>SelectKBest</em> function, and select the optimized parameters as follow:</p>
+<p><code>DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=8,
+            max_features=None, max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=2, min_weight_fraction_leaf=0.0,
+            presort=False, random_state=None, splitter='best')</code></p>
+<p>The evaulation in <em>test_classifier</em> use the accuracy score, precision and recall to evaluate the machine learning model performance. Precision is a measure of result relevancy, while recall is a measure of how many truly relevant results are returned. The definition of precision and recall are as follow:</p>
+<blockquote><p><strong>Definition (Precision)</strong>: <em>The precision equals to the ratio between the number of person classified as POI and are real POI, and the number of person classified as POI. That is, $$ Precision = \frac{\mbox{The number of person classified as POI and are real POI}}{\mbox{The number of person classified as POI}}. $$</em></p>
+<p><strong>Definition (Recall)</strong>: <em>The recall equals to the ratio between the number of person classifed as POI and are real POI, and the number of person real as POI. That is, $$ Recall = \frac{\mbox{The number of person classifed as POI and are real POI}}{\mbox{The number of person real as POI}}. $$</em></p>
+</blockquote>
+<p>Our optimized machine learning algorithm has better performance on the precision of predict the accuracy of <em>poi</em> from the other features of records. The high precision means that the prediction <em>poi</em> by machine learning algorithm has high chance to be the true <em>poi</em>; The high recall means that the real <em>poi</em> will has high chance to be predicted as <em>poi</em>.</p>
 
 </div>
 </div>
@@ -12113,7 +12091,9 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#194;&#182;</a></h3>
+<blockquote><h3 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#194;&#182;</a></h3>
+</blockquote>
+
 </div>
 </div>
 </div>
@@ -12125,19 +12105,6 @@ div#notebook {
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
     </div>
   </div>

@@ -50,13 +50,7 @@ print "The number of records: ", len(data_dict)
 print "The length of features: ", len(data_keys) 
 print "The number of poi: ", sum([1 for key, record in data_dict.iteritems() if record['poi'] == 1])
 
-# Get the number of NaN in each features
-feature_count_nan = {}
-for feature in data_keys:
-    feature_count_nan[feature] = sum([1 for key, record in data_dict.iteritems() if record[feature] == 'NaN'])
-
-feature_count_nan = sorted(feature_count_nan.iteritems(), key=lambda (k,v): (v,k), reverse = True)
-print feature_count_nan
+ 
 
 ### Task 2: Remove outliers
  

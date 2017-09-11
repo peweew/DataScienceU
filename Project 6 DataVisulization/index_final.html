@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="http://d3js.org/d3.v3.min.js"></script> 
+  <script src="http://dimplejs.org/dist/dimple.v2.1.2.min.js"></script>
+    <style>
+        circle {
+            //fill: orange; 
+            stroke: black;
+            stroke-width: .7;
+            opacity: .7;
+        } 
+        h2 {
+            text-align: center;
+            color: darkblue;
+        }
+        
+        div.num_buttons { 
+            position: relative;
+            top: 10px;
+            left: 600px;
+        }
+
+        div.num_buttons div { 
+            display: inline-block;
+            background-color: #558BC8;
+            font-size: 2px;
+            text-align: center;
+            color: white;
+            opacity: .8;
+            width: 10px;
+            padding: 3px 3px 3px 3px;
+            margin: 1px;
+        }
+        p.title {
+            margin-top: -40px;
+            font-weight: bold;
+            font-size: 20px;
+            color: darkblue;
+            opacity: .7;
+        }
+
+        p.num{
+            margin-top: -20px;
+            font-size: 30px;
+            color: darkblue;
+            opacity: .7;
+        }
+
+        p.intro{
+            margin-top: -20px;
+            color: darkblue;
+            opacity: .7;
+        }
+ 
+    </style>
+    <script type="text/javascript">  
+      
+        function draw(data) { 
+            
+            
+        var margin = 75,
+            width = 600,
+            height = 300,
+            totalPop = 891; 
+
+        d3.select("body")
+          .append("h2")
+          .text("Titanic Survivors Report");
+ 
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width + 2 * margin)
+            .attr("height", height + 2 * margin)
+             
+        d3.select("body")
+          .append("p")
+          .attr('class', 'title');
+
+        d3.select("body")
+          .append("p")
+          .attr('class', 'num');
+
+        d3.select('body')
+          .append('p')
+          .attr('class', 'intro');
+
+
+
+        function drawtext(s){
+            s.afterDraw = function (shape, data) {
+                // Get the shape as a d3 selection
+                var s = d3.select(shape),
+                      rect = {
+                        x: parseFloat(s.attr("x")),
+                        y: parseFloat(s.attr("y")),
+                        width: parseFloat(s.attr("width")),
+                        height: parseFloat(s.attr("height"))
+                      }; 
+
+                if (rect.height >= 8) { 
+
+                    var value = (data.aggField[0] == 'Survived') ? data.y : ''
+
+                    svg.append("text") 
+                        .attr("x", rect.x + rect.width / 2)
+                        .attr("y", rect.y  - 5) 
+                        .style("text-anchor", "middle")
+                        .style("font-size", "20px")
+                        .style("font-family", "sans-serif")  
+                        .style('font-weight', 'bold')
+                        .style("opacity", 1) 
+                        .text(value) 
+                }
+            }
+        }
+
+        function Showpic1(mydata){  
+            svg.selectAll('*').remove();
+
+            
+
+            var SurviveCount = [0,0,0];
+            var TotalCount = [0,0,0];
+            var surviverate = [0,0,0];
+
+            var myconvertdata = mydata.map(function(d){
+                if (d['Pclass'] == '1'){ 
+                    
+                    TotalCount[0] += 1;
+                    if (d['Survived'] == 1){
+                        SurviveCount[0] += 1; 
+                    }
+                    //debugger
+                    return { 
+                        'Passanger Class' : 'First Class', 
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if (d['Pclass'] == 2){ 
+                    TotalCount[1] += 1;
+                    if (d['Survived'] == 1){
+                        SurviveCount[1] += 1; 
+                    }
+                    return { 
+                        'Passanger Class' : 'Second Class', 
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if (d['Pclass'] == 3){ 
+                    TotalCount[2] += 1;
+                    if (d['Survived'] == 1){
+                        SurviveCount[2] += 1; 
+                    }
+                    return { 
+                        'Passanger Class' : 'Third Class',
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+            });
+
+            surviverate.forEach(function(d,i, surviverate){
+                surviverate[i] = SurviveCount[i] / TotalCount[i];  
+            });
+            var maxsurviverate = d3.max(surviverate).toFixed(2);
+            var minsurviverate = d3.min(surviverate).toFixed(2);
+            console.log(maxsurviverate);
+            console.log(minsurviverate);
+
+            //debugger;
+            var myChart = new dimple.chart(svg,myconvertdata); 
+            myChart.setBounds(80,30,width,height); 
+
+            var x = myChart.addCategoryAxis('x', 'Passanger Class'); 
+            x.addOrderRule("Passanger Class");
+
+            var y = myChart.addMeasureAxis('y', 'Count'); 
+
+            var s = myChart.addSeries("Survived", dimple.plot.bar); 
+            s.addOrderRule(['Death', 'Survived']);
+
+            myChart.defaultColors = [
+                new dimple.color("#3819D2", 1), // blue 
+                new dimple.color("rgba(147, 147, 147, 0.3)", 1), // red
+            ];
+
+            myChart.addLegend(80, 10, 650, 20, "right", s);
+            myChart.ease = "exp" 
+            myChart.draw(600); 
+
+            drawtext(s); 
+
+
+
+
+            d3.select("p.title")
+              .text("Survivors per Passanger Class");
+
+            d3.select('p.num')
+              .text(maxsurviverate);
+
+            d3.select('p.intro')
+              .text('The first class passenger has highest survival rate : 63%, comparing with the third class passenger with lowest survival rate : 24%');
+    
+            /*
+            function agg(leaves) {
+                var totalSurvived = d3.sum(leaves, function(d) {
+                    return d['Survived'];
+                });
+
+                var total = d3.sum(leaves, function(d) {
+                    return d['Count'];
+                });
+
+                var totalDeath = total - totalSurvived; 
+
+                return {
+                  'Survivednum' : totalSurvived,
+                  'Deadnum' : totalDeath, 
+                  'Survived' : leaves['Survived']
+                };
+            }
+
+            var nested = d3.nest()
+                           .key(function(d) {
+                              return d['Pclass'];
+                           })
+                           .rollup(agg)
+                           .entries(data);
+
+
+             
+            var svg = d3.select("body")
+                          .append("svg") 
+                          .attr('width',880)
+                          .attr('height', 200) 
+                          .attr('class','piechart'); 
+              
+                    
+            var myChart = new dimple.chart(svg, nested);
+            myChart.setBounds(40,20,130,130); 
+            myChart.addMeasureAxis("p", "percent");
+            var pie = myChart.addSeries(['Class', 'Survived'], dimple.plot.pie);
+            pie.radius = 5;
+            pie.innerRadius = "50%";
+            //debugger
+            myChart.addLegend(0, 0, 30, '60%', "left");
+            myChart.draw();  
+
+            */
+        }
+
+         
+
+        function Showpic2(mydata){
+            svg.selectAll('*').remove(); 
+
+            var SurviveCount = [0,0];
+            var TotalCount = [0,0];
+            var surviverate = [0,0];
+
+            var myconvertdata = mydata.map(function(d){
+                if (d['Sex'] == 'male'){ 
+                    
+                    TotalCount[0] += 1;
+                    if (d['Survived'] == 1){
+                        SurviveCount[0] += 1; 
+                    }
+                    //debugger
+                    return { 
+                        'Sex' : 'Male', 
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if(d['Sex'] == 'female'){
+
+                    TotalCount[1] += 1;
+                    if (d['Survived'] == 1){
+                        SurviveCount[1] += 1; 
+                    }
+                    //debugger
+                    return { 
+                        'Sex' : 'Female', 
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                } 
+            });
+
+            var myChart = new dimple.chart(svg,myconvertdata); 
+            myChart.setBounds(80,30,width,height); 
+            var x = myChart.addCategoryAxis('x', 'Sex'); 
+            var y = myChart.addMeasureAxis('y', 'Count'); 
+            
+            var s = myChart.addSeries("Survived", dimple.plot.bar); 
+            s.addOrderRule(['Death', 'Survived']);
+
+            myChart.defaultColors = [
+                new dimple.color("#3819D2", 1), // blue 
+                new dimple.color("rgba(147, 147, 147, 0.3)", 1), // red
+            ];
+
+            myChart.addLegend(80, 10, 650, 20, "right");
+            myChart.ease = "exp" 
+            myChart.draw(600);
+
+            drawtext(s); 
+
+            surviverate.forEach(function(d,i, surviverate){
+                surviverate[i] = SurviveCount[i] / TotalCount[i];  
+            });
+            var maxsurviverate = d3.max(surviverate).toFixed(2);
+            var minsurviverate = d3.min(surviverate).toFixed(2);
+            console.log(maxsurviverate);
+            console.log(minsurviverate);
+
+            d3.select("p.title")
+              .text("Survivors per Sex");
+
+            d3.select('p.num')
+              .text(maxsurviverate);
+
+            d3.select('p.intro')
+              .text('The female passenger has highest survival rate : 74%, comparing with the male passenger with lowest survival rate : 19%, The Lady first protocol was followed in this tragedy.');
+        } 
+
+
+
+
+        function Showpic3(mydata){
+            svg.selectAll('*').remove();  
+ 
+            var SurviveCount = [0,0,0,0];
+            var TotalCount = [0,0,0,0];
+            var surviverate = [0,0,0,0];
+
+            filtereddata = mydata.filter(function(d){
+                if(d['Age'] == ''){ 
+                    return false;
+                }
+                return true;
+            });
+
+            var myconvertdata = filtereddata.map(function(d){
+                if(d['Age'] < 18){
+                    TotalCount[0] += 1;
+                    if (d['Survived'] == 1){
+                        SurviveCount[0] += 1; 
+                    }
+
+                    return {
+                        'Name' : d['Name'],
+                        'Age' : 'Age < 18',
+                        'Count' : 1,
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if(d['Age'] >= 18 && d['Age'] < 35){ 
+                    TotalCount[1] += 1;
+                    if (d['Survived'] == 1){
+                        SurviveCount[1] += 1; 
+                    }
+
+                    return {
+                        'Name' : d['Name'],
+                        'Age' : 'Age 18-34',
+                        'Count' : 1,
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if(d['Age'] >= 35 && d['Age'] < 60){
+                    TotalCount[2] += 1;
+                    if (d['Survived'] == 1){
+                        SurviveCount[2] += 1; 
+                    }
+
+                    return {
+                        'Name' : d['Name'],
+                        'Age' : 'Age 35-60',
+                        'Count' : 1,
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if(d['Age'] >= 60){ 
+                    TotalCount[3] += 1;
+                    if (d['Survived'] == 1){
+                        SurviveCount[3] += 1; 
+                    }
+
+                    return {
+                        'Name' : d['Name'],
+                        'Age' : 'Age > 60',
+                        'Count' : 1,
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                
+            });  
+            //debugger;
+            var myChart = new dimple.chart(svg, myconvertdata); 
+            myChart.setBounds(80,30,width,height); 
+            var x = myChart.addCategoryAxis('x', 'Age'); 
+            x.addOrderRule(['Age < 18', 'Age 18-34', 'Age 35-60' ,'Age > 60']);
+            var y = myChart.addMeasureAxis('y', 'Count'); 
+            
+            var s = myChart.addSeries("Survived", dimple.plot.bar); 
+            s.addOrderRule(['Death', 'Survived']);
+
+            myChart.defaultColors = [
+                new dimple.color("#3819D2", 1), // blue 
+                new dimple.color("rgba(147, 147, 147, 0.3)", 1), // red
+            ];
+
+            myChart.addLegend(80, 10, 650, 20, "right");
+            myChart.ease = "exp" 
+            myChart.draw(600);
+
+            drawtext(s); 
+
+            surviverate.forEach(function(d,i, surviverate){
+                surviverate[i] = SurviveCount[i] / TotalCount[i];  
+            });
+            var maxsurviverate = d3.max(surviverate).toFixed(2);
+            var minsurviverate = d3.min(surviverate).toFixed(2);
+            console.log(maxsurviverate);
+            console.log(minsurviverate);
+
+            d3.select("p.title")
+              .text("Survivors per Age");
+
+            d3.select('p.num')
+              .text(maxsurviverate);
+
+            d3.select('p.intro')
+              .text('The child and teenager passenger has highest survival rate : 54%, but the elder passenger with lowest survival rate : 27%');
+
+        }
+
+        function Showpic4(mydata){
+            svg.selectAll('*').remove(); 
+
+            var SurviveCount = [0,0,0];
+            var TotalCount = [0,0,0];
+            var surviverate = [0,0,0];
+
+            filtereddata = mydata.filter(function(d){
+                if(d['Embarked'] == ''){ 
+                    return false;
+                }
+                return true;
+            }); 
+
+            var myconvertdata = filtereddata.map(function(d){
+                if (d['Embarked'] == 'S'){ 
+                    TotalCount[0] += 1;
+                    if (d['Survived'] == 1){
+                        SurviveCount[0] += 1; 
+                    }
+
+                    return { 
+                        'Embarked Location'  : 'Southampton', 
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if (d['Embarked'] == 'C'){
+                    TotalCount[1] += 1;
+                    if (d['Survived'] == 1){
+                        SurviveCount[1] += 1; 
+                    } 
+
+                    return { 
+                        'Embarked Location' : 'Cherbourg', 
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if (d['Embarked'] == 'Q'){ 
+                    TotalCount[2] += 1;
+                    if (d['Survived'] == 1){
+                        SurviveCount[2] += 1; 
+                    }
+
+                    return { 
+                        'Embarked Location' : 'Queenstown',
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+            });
+
+            //debugger;
+
+            var myChart = new dimple.chart(svg,myconvertdata); 
+            myChart.setBounds(80,30,width,height); 
+            var x = myChart.addCategoryAxis('x', 'Embarked Location'); 
+            var y = myChart.addMeasureAxis('y', 'Count'); 
+
+            var s = myChart.addSeries("Survived", dimple.plot.bar); 
+            s.addOrderRule(['Death', 'Survived']);
+
+            myChart.defaultColors = [
+                new dimple.color("#3819D2", 1), // blue 
+                new dimple.color("rgba(147, 147, 147, 0.3)", 1), // red
+            ];
+
+            myChart.addLegend(80, 10, 650, 20, "right");
+            myChart.ease = "exp"
+            myChart.title = 'Titanic Location' 
+            myChart.draw(600);
+
+            drawtext(s); 
+
+            surviverate.forEach(function(d,i, surviverate){
+                surviverate[i] = SurviveCount[i] / TotalCount[i];  
+            });
+            var maxsurviverate = d3.max(surviverate).toFixed(2);
+            var minsurviverate = d3.min(surviverate).toFixed(2);
+            console.log(maxsurviverate);
+            console.log(minsurviverate);
+
+            d3.select("p.title")
+              .text("Survivors per Embarked Port");
+
+            d3.select('p.num')
+              .text(maxsurviverate);
+
+            d3.select('p.intro')
+              .text('The passenger boarded on Cherbourg has highest survival rate : 55%, comparing with the passenger boarded on Southampton with lowest survival rate : 34%');
+
+        }
+
+        Showpic1(data); 
+
+
+
+        function update(idx){
+            if(idx == 1){ 
+            }
+            else if(idx == 2){
+                Showpic2(data);
+            }
+            else if(idx == 3){
+                Showpic3(data);    
+            }
+            else if(idx == 4){
+                Showpic4(data);
+            }
+        }
+
+        var idx = 1;
+        var year_interval = setInterval(function() {
+                idx ++;
+                update(idx);
+
+
+                if(idx > 4) {
+                    clearInterval(year_interval);
+
+                    var buttons = d3.select("body")
+                        .append("div")
+                        .attr("class", "num_buttons") 
+                        .selectAll("div")
+                        .data(['1', '2', '3', '4'])
+                        .enter()
+                        .append("div")
+                        .text(function(d) {
+                            return d;
+                        });
+
+                    buttons.on("click", function(d) { 
+                            if(d == '1'){ 
+                                Showpic1(data); 
+                            }
+                            else if(d == '2'){ 
+                                Showpic2(data);   
+                            }
+                            else if(d == '3'){ 
+                                Showpic3(data);
+                            }
+                            else if(d == '4'){ 
+                                Showpic4(data);
+                            }
+                        }); 
+
+                }
+                 
+                 
+            }, 2500);
+
+
+
+        
+
+
+
+
+        
+
+             
+
+            
+
+        }; 
+         
+
+        
+
+      </script>
+
+
+  </head>
+<body>
+    <div>
+        <script type="text/javascript"> 
+        
+            d3.csv("titanic.csv", function(d) {
+                  d['Count'] = +d['Count']; 
+                  return d;
+                }, draw);
+        </script>  
+    </div> 
+
+
+     
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

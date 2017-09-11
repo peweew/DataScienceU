@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="http://d3js.org/d3.v3.min.js"></script> 
+  <script src="http://dimplejs.org/dist/dimple.v2.1.2.min.js"></script>
+    <style>
+        circle {
+            //fill: orange; 
+            stroke: black;
+            stroke-width: .7;
+            opacity: .7;
+        } 
+        h2 {
+            text-align: center;
+            color: darkblue;
+        }
+        h3 {
+            text-align: left;
+            color: darkblue;
+            opacity: .7;
+        }
+        div.num_buttons { 
+            position: relative;
+            top: 10px;
+            left: 600px;
+        }
+
+        div.num_buttons div { 
+            display: inline-block;
+            background-color: #558BC8;
+            font-size: 2px;
+            text-align: center;
+            color: white;
+            opacity: .8;
+            width: 10px;
+            padding: 3px 3px 3px 3px;
+            margin: 1px;
+        }
+ 
+    </style>
+    <script type="text/javascript">  
+      
+        function draw(data) { 
+            
+            
+        var margin = 75,
+            width = 600,
+            height = 300,
+            totalPop = 891; 
+
+        d3.select("body")
+          .append("h2")
+          .text("Titanic Survivors Report");
+
+        d3.select("body")
+          .append("h3")
+          .text("Survivors per Passanger Class");
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width + 2 * margin)
+            .attr("height", height + 2 * margin)
+             
+       
+
+
+
+        function Showpic1(mydata){  
+            svg.selectAll('*').remove();
+
+            var deathCount = [0,0,0];
+            var TotalCount = [0,0,0];
+
+            var myconvertdata = mydata.map(function(d){
+                if (d['Pclass'] == '1'){ 
+                    
+                    TotalCount[0] += 1;
+                    if (d['Survived'] == 1){
+                        deathCount[0] += 1; 
+                    }
+                    //debugger
+                    return { 
+                        'Passanger Class' : 'First Class', 
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if (d['Pclass'] == 2){ 
+                    TotalCount[1] += 1;
+                    if (d['Survived'] == 1){
+                        deathCount[1] += 1; 
+                    }
+                    return { 
+                        'Passanger Class' : 'Second Class', 
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if (d['Pclass'] == 3){ 
+                    TotalCount[2] += 1;
+                    if (d['Survived'] == 1){
+                        deathCount[2] += 1; 
+                    }
+                    return { 
+                        'Passanger Class' : 'Third Class',
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+            });
+
+            //debugger;
+            var myChart = new dimple.chart(svg,myconvertdata); 
+            myChart.setBounds(80,30,width,height); 
+            var x = myChart.addCategoryAxis('x', 'Passanger Class'); 
+            var y = myChart.addMeasureAxis('y', 'Count'); 
+            var s = myChart.addSeries("Survived", dimple.plot.bar); 
+            myChart.addLegend(80, 10, 650, 20, "right", s);
+            myChart.ease = "exp" 
+            myChart.draw(600); 
+    
+            /*
+            function agg(leaves) {
+                var totalSurvived = d3.sum(leaves, function(d) {
+                    return d['Survived'];
+                });
+
+                var total = d3.sum(leaves, function(d) {
+                    return d['Count'];
+                });
+
+                var totalDeath = total - totalSurvived; 
+
+                return {
+                  'Survivednum' : totalSurvived,
+                  'Deadnum' : totalDeath, 
+                  'Survived' : leaves['Survived']
+                };
+            }
+
+            var nested = d3.nest()
+                           .key(function(d) {
+                              return d['Pclass'];
+                           })
+                           .rollup(agg)
+                           .entries(data);
+
+
+             
+            var svg = d3.select("body")
+                          .append("svg") 
+                          .attr('width',880)
+                          .attr('height', 200) 
+                          .attr('class','piechart'); 
+              
+                    
+            var myChart = new dimple.chart(svg, nested);
+            myChart.setBounds(40,20,130,130); 
+            myChart.addMeasureAxis("p", "percent");
+            var pie = myChart.addSeries(['Class', 'Survived'], dimple.plot.pie);
+            pie.radius = 5;
+            pie.innerRadius = "50%";
+            //debugger
+            myChart.addLegend(0, 0, 30, '60%', "left");
+            myChart.draw();  
+
+            */
+        }
+
+         
+
+        function Showpic2(mydata){
+            svg.selectAll('*').remove();
+            var myconvertdata = mydata.map(function(d){
+                return { 
+                        'Sex' : (d['Sex'] == 'male') ? 'Male' : 'Female', 
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+            });
+
+            var myChart = new dimple.chart(svg,myconvertdata); 
+            myChart.setBounds(80,30,width,height); 
+            var x = myChart.addCategoryAxis('x', 'Sex'); 
+            var y = myChart.addMeasureAxis('y', 'Count'); 
+            var s = myChart.addSeries("Survived", dimple.plot.bar); 
+            myChart.addLegend(80, 10, 650, 20, "right");
+            myChart.ease = "exp" 
+            myChart.draw(600);
+        } 
+
+        function Showpic3(mydata){
+            svg.selectAll('*').remove();  
+
+            filtereddata = mydata.filter(function(d){
+                if(d['Age'] == ''){ 
+                    return false;
+                }
+                return true;
+            });
+
+            var myconvertdata = filtereddata.map(function(d){
+                if(d['Age'] < 18){
+                    return {
+                        'Name' : d['Name'],
+                        'Age' : 'Age < 18',
+                        'Count' : 1,
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if(d['Age'] >= 18 && d['Age'] < 35){ 
+                    return {
+                        'Name' : d['Name'],
+                        'Age' : 'Age 18-34',
+                        'Count' : 1,
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if(d['Age'] >= 35 && d['Age'] < 60){ 
+                    return {
+                        'Name' : d['Name'],
+                        'Age' : 'Age 35-60',
+                        'Count' : 1,
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if(d['Age'] >= 60){ 
+                    return {
+                        'Name' : d['Name'],
+                        'Age' : 'Age > 60',
+                        'Count' : 1,
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                
+            });  
+            //debugger;
+            var myChart = new dimple.chart(svg, myconvertdata); 
+            myChart.setBounds(80,30,width,height); 
+            var x = myChart.addCategoryAxis('x', 'Age'); 
+            var y = myChart.addMeasureAxis('y', 'Count'); 
+            var s = myChart.addSeries("Survived", dimple.plot.bar); 
+            myChart.addLegend(80, 10, 650, 20, "right");
+            myChart.ease = "exp" 
+            myChart.draw(600);
+
+        }
+
+        function Showpic4(mydata){
+            svg.selectAll('*').remove();
+            filtereddata = mydata.filter(function(d){
+                if(d['Embarked'] == ''){ 
+                    return false;
+                }
+                return true;
+            }); 
+
+            var myconvertdata = filtereddata.map(function(d){
+                if (d['Embarked'] == 'S'){ 
+                    return { 
+                        'Embarked Location'  : 'Southampton', 
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if (d['Embarked'] == 'C'){ 
+                    return { 
+                        'Embarked Location' : 'Cherbourg', 
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+                else if (d['Embarked'] == 'Q'){ 
+                    return { 
+                        'Embarked Location' : 'Queenstown',
+                        'Count': 1, 
+                        'Survived' : (d['Survived'] == 1) ? 'Survived' : 'Dead'
+                    };
+                }
+            });
+
+            //debugger;
+
+            var myChart = new dimple.chart(svg,myconvertdata); 
+            myChart.setBounds(80,30,width,height); 
+            var x = myChart.addCategoryAxis('x', 'Embarked Location'); 
+            var y = myChart.addMeasureAxis('y', 'Count'); 
+            var s = myChart.addSeries("Survived", dimple.plot.bar); 
+            myChart.addLegend(80, 10, 650, 20, "right");
+            myChart.ease = "exp"
+            myChart.title = 'Titanic Location' 
+            myChart.draw(600);
+
+        }
+
+        Showpic1(data); 
+
+        var buttons = d3.select("body")
+                        .append("div")
+                        .attr("class", "num_buttons") 
+                        .selectAll("div")
+                        .data(['1', '2', '3', '4'])
+                        .enter()
+                        .append("div")
+                        .text(function(d) {
+                            return d;
+                        });
+
+        buttons.on("click", function(d) { 
+                if(d == '1'){
+                    d3.select("h3")
+                      .text("Survivors per Passanger Class");
+                    Showpic1(data); 
+                }
+                else if(d == '2'){
+                    d3.select("h3")
+                      .text("Survivors per Sex");
+                    Showpic2(data);   
+                }
+                else if(d == '3'){
+                    d3.select("h3")
+                      .text("Survivors per Age");
+                    Showpic3(data);
+                }
+                else if(d == '4'){
+                    d3.select("h3")
+                      .text("Survivors per Embarked Port");
+                    Showpic4(data);
+                }
+            }); 
+
+             
+
+            
+
+        }; 
+         
+
+        
+
+      </script>
+
+
+  </head>
+<body>
+    <div>
+        <script type="text/javascript"> 
+        
+            d3.csv("titanic.csv", function(d) {
+                  d['Count'] = +d['Count']; 
+                  return d;
+                }, draw);
+        </script>  
+    </div>
+    <div> 
+    </div>
+
+
+     
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

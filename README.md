@@ -7,4 +7,4 @@
 4. Data Wrangling....................(Pass)
 5. Explore Data Analysis.............(Pass)
 6. Introduce to Machine Learning.....(Pass)
-7. Data Visulization
+7. Data Visulization.................(Pass)

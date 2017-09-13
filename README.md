@@ -10,4 +10,4 @@
 7. Data Visulization.................(Pass)
 
 
-![alt text](nanodegree)
+![alt text](nanodegree.png)
